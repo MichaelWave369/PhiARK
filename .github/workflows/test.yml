@@ -20,6 +20,16 @@ jobs:
           npm run seed
           npm run vault -- verify
           npm run vault -- status
+      - name: R0.3 knowledge-pack plan and portable roundtrip
+        run: |
+          npm run packs -- list
+          npm run packs -- plan essential-field-r01
+          DIGEST=$(node -e "import('./src/vault.mjs').then(async ({readCatalog})=>console.log((await readCatalog()).find(x=>x.title==='Emergency Information Plan').id))")
+          npm run packs -- bind essential-field-r01 readiness-plan "$DIGEST"
+          npm run packs -- export essential-field-r01 "$RUNNER_TEMP/phiark-ci-snapshot"
+          npm run packs -- verify "$RUNNER_TEMP/phiark-ci-snapshot"
+          npm run packs -- restore "$RUNNER_TEMP/phiark-ci-snapshot" "$RUNNER_TEMP/phiark-ci-restored" --i-approve-new-vault
+          PHIARK_DATA_DIR="$RUNNER_TEMP/phiark-ci-restored" npm run vault -- verify
       - name: Local HTTP smoke test (no external connections)
         run: |
           node src/server.mjs > /tmp/phiark-server.log 2>&1 &

@@ -4,9 +4,11 @@ import {
   ChevronRight, CircleAlert, ClipboardCheck, Compass, ExternalLink, FileCheck2,
   FilePlus2, FileText, Globe2, GraduationCap, HardDrive, HeartPulse, Leaf, LibraryBig,
   LockKeyhole, Radio, Search, Server, ShieldCheck, UploadCloud, Waves, Wrench,
-  X, Zap, Sparkles
+  X, Zap, Sparkles, PackageCheck
 } from 'lucide-react';
 import sourceDirectory from '../../catalog/sources.json';
+import essentialPack from '../../packs/essential-field-r01.json';
+import learningPack from '../../packs/learning-core-r01.json';
 import emergencyGuide from '../../starter-guides/EMERGENCY_INFORMATION_PLAN.md?raw';
 import verificationGuide from '../../starter-guides/KNOWLEDGE_VERIFICATION.md?raw';
 import { filterItems } from './filter.mjs';
@@ -41,6 +43,7 @@ const SEED = [
     safety: 'Educational reference', license: 'MIT (first-party text)'
   }
 ];
+const PACKS = [essentialPack, learningPack];
 const SOURCES = sourceDirectory.candidates.map((item, index) => ({
   id: 'source-' + index,
   name: item.name,
@@ -197,10 +200,11 @@ export default function App() {
       <div className="sidebar-main">
         <Label>WORKSPACE</Label>
         <button className={'nav-item ' + (view === 'library' ? 'selected' : '')} onClick={() => switchTo('library')}><BookOpen size={17}/> Library <ChevronRight size={15} className="nav-end" /></button>
+        <button className={'nav-item ' + (view === 'packs' ? 'selected' : '')} onClick={() => switchTo('packs')}><PackageCheck size={17}/> Knowledge packs <ChevronRight size={15} className="nav-end" /></button>
         <button className={'nav-item ' + (view === 'sources' ? 'selected' : '')} onClick={() => switchTo('sources')}><Globe2 size={17}/> Source directory <ChevronRight size={15} className="nav-end" /></button>
         <button className={'nav-item ' + (view === 'readiness' ? 'selected' : '')} onClick={() => switchTo('readiness')}><ClipboardCheck size={17}/> Offline readiness <ChevronRight size={15} className="nav-end" /></button>
 
-        {view !== 'readiness' && <>
+        {view !== 'readiness' && view !== 'packs' && <>
           <div className="sidebar-divider" />
           <Label>TOPICS</Label>
           <div className="category-nav">{SUBJECTS.map((item) => {
@@ -228,7 +232,7 @@ export default function App() {
         <section className="hero">
           <div className="hero-glow" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orb-mark">Φ</div></div>
           <div className="hero-content">
-            <div className="hero-eyebrow"><span className="tiny-star">✦</span> AUTONOMOUS RESILIENCE & KNOWLEDGE <span className="hero-edition">R0.2 · REACT SHOWCASE</span></div>
+            <div className="hero-eyebrow"><span className="tiny-star">✦</span> AUTONOMOUS RESILIENCE & KNOWLEDGE <span className="hero-edition">R0.3 · KNOWLEDGE PACKS</span></div>
             <h1>Keep the knowledge.<br/><em>Keep the future.</em></h1>
             <p>When the signal disappears, understanding shouldn't. Explore an honest preview of PhiARK, a source-aware, local-first library for PhiOS.</p>
             <div className="hero-buttons">
@@ -248,7 +252,7 @@ export default function App() {
 
         <section className="workspace" id="workspace">
           <div className="workspace-top">
-            <div><Label>YOUR KNOWLEDGE / IN REACH</Label><h2>{view === 'library' ? 'Explore the library' : view === 'sources' ? 'Source directory' : 'Offline readiness'}</h2><p className="section-copy">{view === 'library' ? 'These are real bundled reading files, plus any files you temporarily open here.' : view === 'sources' ? 'External candidates to research and license-check before downloading to your local vault.' : 'An operator checklist. Ticking a box is not proof that your hardware has passed a disconnected test.'}</p></div>
+            <div><Label>YOUR KNOWLEDGE / IN REACH</Label><h2>{view === 'library' ? 'Explore the library' : view === 'sources' ? 'Source directory' : view === 'packs' ? 'Knowledge packs' : 'Offline readiness'}</h2><p className="section-copy">{view === 'library' ? 'These are real bundled reading files, plus any files you temporarily open here.' : view === 'sources' ? 'External candidates to research and license-check before downloading to your local vault.' : view === 'packs' ? 'Offline collection blueprints. Every slot starts unfilled in this public demo; actual installations are checked only by your private local PhiARK CLI.' : 'An operator checklist. Ticking a box is not proof that your hardware has passed a disconnected test.'}</p></div>
             {view === 'library' && <button className="import-btn" onClick={() => fileInput.current?.click()}><FilePlus2 size={17}/> Preview a local file</button>}
           </div>
           <input ref={fileInput} type="file" multiple accept=".txt,.md,.pdf,.epub" className="hidden-input" onChange={(event) => { importFiles(event.target.files); event.target.value = ''; }} aria-label="Choose local documents to preview in this browser session" />
@@ -272,6 +276,23 @@ export default function App() {
               <div><strong>Curious how your own files would look?</strong><p>Drop TXT, MD, PDF or EPUB files here, or pick them above. Max 25 MB each. Preview only: no saving, syncing or publishing.</p></div>
             </div>
           </>}
+
+          {view === 'packs' && <div className="pack-list">
+            {PACKS.map((pack) => <article key={pack.id} className="pack-card">
+              <div className="pack-heading">
+                <span className="round-icon"><PackageCheck size={24}/></span>
+                <div><Label>PACK BLUEPRINT · {pack.edition}</Label><h3>{pack.title}</h3><p>{pack.summary}</p></div>
+                <span className="pack-count">{pack.slots.length} planned</span>
+              </div>
+              <div className="pack-stats"><span>Public demo: <strong>0 verified installed items</strong></span><span>No archives downloaded by this page</span></div>
+              <div className="pack-rows">{pack.slots.map((slot) => <div key={slot.id} className="pack-slot">
+                <div><strong>{slot.title}</strong><small>{slot.subject} · {slot.priority} · {slot.source}</small></div>
+                <span className="pack-missing">NOT INSTALLED HERE</span>
+              </div>)}</div>
+              <div className="pack-footer"><CircleAlert size={16}/><span>This is a coverage plan, not an approved safety library. Bind and verify real documents on the local PhiARK machine using the R0.3 pack CLI.</span></div>
+            </article>)}
+            <div className="source-note"><CircleAlert size={18}/><p>R0.3 supports portable SHA-256 snapshots and restore to a new vault. It does not create a bootable USB, install Kiwix, or import Kolibri channels automatically.</p></div>
+          </div>}
 
           {view === 'sources' && <>
             <div className="list-heading"><strong>{matchedSources.length} source leads</strong><span>External links · Requires internet to visit</span></div>

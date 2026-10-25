@@ -1,15 +1,18 @@
 {
   "name": "phiark-knowledge-vault",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
-  "description": "PhiARK: offline-first, source-aware local knowledge vault and portable packs for PhiOS",
-  "engines": { "node": ">=20" },
+  "description": "PhiARK: offline-first vault, portable packs, verified Kiwix archive intake",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node src/server.mjs",
     "seed": "node src/bootstrap.mjs",
     "vault": "node src/cli.mjs",
     "packs": "node src/packs-cli.mjs",
+    "kiwix": "node src/kiwix-cli.mjs",
     "test": "node --test"
   },
   "license": "MIT"

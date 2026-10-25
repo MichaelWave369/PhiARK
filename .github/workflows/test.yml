@@ -30,6 +30,10 @@ jobs:
           npm run packs -- verify "$RUNNER_TEMP/phiark-ci-snapshot"
           npm run packs -- restore "$RUNNER_TEMP/phiark-ci-snapshot" "$RUNNER_TEMP/phiark-ci-restored" --i-approve-new-vault
           PHIARK_DATA_DIR="$RUNNER_TEMP/phiark-ci-restored" npm run vault -- verify
+      - name: R0.4 offline Kiwix inventory checks
+        run: |
+          npm run kiwix -- list
+          npm run kiwix -- inventory
       - name: Local HTTP smoke test (no external connections)
         run: |
           node src/server.mjs > /tmp/phiark-server.log 2>&1 &

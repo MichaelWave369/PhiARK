@@ -61,3 +61,9 @@ Developer workflow: `cd site && npm install && npm test && npm run build`. See [
 MIT license applies to PhiARK's original code and bundled first-party guides only. Third-party content retains its own rights.
 
 **Sovereign. Coherent. Local. Free.**
+
+## R0.4: selected Kiwix archives and verified local acquisition
+
+Six exact Kiwix archive editions are now cataloged in `catalog/kiwix-selected-r04.json`. They are **candidates**, not preloaded files. Inspect plans via `npm run kiwix -- list` and actual verified files via `npm run kiwix -- inventory`.
+
+Run `npm run kiwix -- acquire chemistry --i-approve-download` for a single **explicit, checksum-verified** Kiwix archive download from approved official hosts, or manually download the selected `.zim` and its `.sha256` sidecar and use `npm run kiwix -- import chemistry /path/exact.zim /path/exact.zim.sha256`. Kiwix reader/runtime integration is still separate. See [R0.4 operator guide](docs/KIWIX_R04.md). No archive or safety approval is claimed before local verification.

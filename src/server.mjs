@@ -4,6 +4,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDocumentId, objectPath, readCatalog, searchVault, vaultRoot } from './vault.mjs';
+import { inventory as kiwixInventory } from './kiwix.mjs';
 
 const webroot = join(dirname(fileURLToPath(import.meta.url)), '..', 'public');
 const staticFiles = new Map([
@@ -44,6 +45,16 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/api/items') {
       return respond(res, 200, JSON.stringify(await readCatalog()), undefined, head);
     }
+    if (url.pathname === '/api/kiwix') {
+      // Explicit read-only inventory, computed from local checksums.
+      // Reader launch is never exposed as an HTTP endpoint.
+      return respond(res, 200, JSON.stringify({
+        archiveStatus: 'LOCALLY_VERIFIED_BYTES_ONLY',
+        readerLaunch: 'OPERATOR_CLI_ONLY',
+        readerRunning: 'UNKNOWN_NOT_PROBED',
+        rows: await kiwixInventory()
+      }), undefined, head);
+    }
     if (url.pathname === '/api/search') {
       const entries = await searchVault(url.searchParams.get('q') || '', url.searchParams.get('subject') || 'all');
       return respond(res, 200, JSON.stringify(entries), undefined, head);
@@ -76,6 +87,6 @@ const server = createServer(async (req, res) => {
 });
 server.listen(port, host, () => {
   const address = server.address();
-  console.log('PhiARK R0.1 local knowledge vault: http://' + host + ':' + address.port);
+  console.log('PhiARK R0.5 local knowledge vault: http://' + host + ':' + address.port);
   if (process.env.PHIARK_ALLOW_LAN === '1') console.warn('WARNING: no authentication. Use only on trusted isolated networks.');
 });

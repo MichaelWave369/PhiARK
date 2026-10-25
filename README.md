@@ -67,3 +67,17 @@ MIT license applies to PhiARK's original code and bundled first-party guides onl
 Six exact Kiwix archive editions are now cataloged in `catalog/kiwix-selected-r04.json`. They are **candidates**, not preloaded files. Inspect plans via `npm run kiwix -- list` and actual verified files via `npm run kiwix -- inventory`.
 
 Run `npm run kiwix -- acquire chemistry --i-approve-download` for a single **explicit, checksum-verified** Kiwix archive download from approved official hosts, or manually download the selected `.zim` and its `.sha256` sidecar and use `npm run kiwix -- import chemistry /path/exact.zim /path/exact.zim.sha256`. Kiwix reader/runtime integration is still separate. See [R0.4 operator guide](docs/KIWIX_R04.md). No archive or safety approval is claimed before local verification.
+
+## R0.5 loopback-only Kiwix reader (operator approved)
+
+PhiARK can now **plan** and deliberately start an external, operator-installed `kiwix-serve` executable against exactly one **locally checksum-verified ZIM archive**. The reader stays bound to `127.0.0.1` (default port `8181`) and exits with the foreground CLI session. This is not automatically enabled, remotely exposed, installed, or granted PhiOS permissions.
+
+```bash
+npm run reader -- inventory
+npm run reader -- plan chemistry --binary /absolute/path/kiwix-serve --binary-sha256 <independently-checked-SHA256> --port 8181
+npm run reader -- start chemistry --binary /absolute/path/kiwix-serve --binary-sha256 <independently-checked-SHA256> --port 8181 --i-approve-launch
+```
+
+The **local** browser at `http://127.0.0.1:3691/` reports actual hash-verified archive inventory at `/api/kiwix`; it has no remote launch/stop control. Once explicitly started, Kiwix's own browser viewer is reachable at `http://127.0.0.1:8181/` on the **same computer**. Third-party archive text is not certified for factual/medical safety or redistribution. See [R0.5 reader boundary](docs/KIWIX_READER_R05.md).
+
+The **GitHub Pages React showcase remains public-only**. It cannot access localhost on anyone's computer, detect a running reader, or open your private ZIM collection remotely.

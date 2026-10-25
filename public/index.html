@@ -33,13 +33,20 @@
     <main>
       <header><span class="eyebrow">PHIOS / OFFLINE LIBRARY</span><span class="chip" id="connection">CHECKING LOCAL SERVER</span></header>
       <section class="hero">
-        <p class="eyebrow">Φ KNOWLEDGE VAULT / R0.1</p>
+        <p class="eyebrow">Φ KNOWLEDGE VAULT / R0.5</p>
         <h1>Human knowledge.<br><em>Kept within reach.</em></h1>
         <p>Search the documents stored on this machine. No cloud AI, telemetry, login, or outside network is required.</p>
         <div class="searchbox"><label for="search">SEARCH LOCAL KNOWLEDGE</label><input id="search" type="search" placeholder="Search titles, publishers, and plain-text documents…" autocomplete="off"></div>
       </section>
       <div class="metrics"><div><span>LOCAL DOCUMENTS</span><strong id="total">—</strong></div><div><span>SEARCH RESULTS</span><strong id="result-count">—</strong></div><div><span>LIBRARY STATE</span><strong id="library-state">Checking</strong></div></div>
       <section aria-live="polite"><div class="section-head"><div><p class="eyebrow">LOCAL CATALOG</p><h2>Available documents</h2></div><span id="filter-label">All categories</span></div><p id="notice" class="notice">Connecting to the local vault…</p><div id="results" class="results"></div></section>
+      <section class="kiwix-section" aria-live="polite">
+        <div class="section-head"><div><p class="eyebrow">KIWIX / LOCAL BYTE INVENTORY</p><h2>Offline archive shelf</h2></div><span id="kiwix-count">Checking files…</span></div>
+        <p class="kiwix-description">These files are verified directly on this machine. Byte matching does not approve their safety or licensing. To open an archive in the reader, start the separately installed <code>kiwix-serve</code> executable explicitly in your terminal.</p>
+        <p id="kiwix-notice" class="notice">Verifying local Kiwix archive bytes…</p>
+        <div id="kiwix-results" class="results"></div>
+        <p class="kiwix-description">Launch with <code>npm run reader -- start &lt;id&gt; --binary /absolute/path/kiwix-serve --binary-sha256 &lt;SHA256&gt; --i-approve-launch</code>. Default reader address: <a href="http://127.0.0.1:8181/" target="_blank" rel="noopener noreferrer">http://127.0.0.1:8181/</a> (only when you started it). The page cannot start a server or confirm one is running.</p>
+      </section>
       <footer>Every document is locally stored. Source, license, and review fields are disclosed, not assumed. Run <code>npm run vault -- verify</code> for an integrity check.</footer>
     </main>
   </div>

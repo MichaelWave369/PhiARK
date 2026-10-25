@@ -74,3 +74,34 @@ categories.addEventListener('click', (event) => {
   refresh();
 });
 refresh();
+
+async function refreshKiwixShelf() {
+  const box = document.querySelector('#kiwix-results');
+  const count = document.querySelector('#kiwix-count');
+  const message = document.querySelector('#kiwix-notice');
+  try {
+    const response = await fetch('/api/kiwix', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Archive inventory unavailable');
+    const data = await response.json();
+    const verified = data.rows.filter(x => x.status === 'CHECKSUM_MATCHED');
+    count.textContent = verified.length + ' / ' + data.rows.length + ' byte-verified';
+    box.replaceChildren();
+    message.hidden = true;
+    for (const entry of data.rows) {
+      const article = line('article', 'document kiwix-item');
+      const left = line('div');
+      left.append(line('div', 'tag', entry.status.replaceAll('_', ' ')));
+      left.append(line('h3', '', entry.title));
+      left.append(line('p', 'meta', entry.filename + ' · ' + (entry.bytes ? (entry.bytes / 1024 / 1024).toFixed(1) + ' MiB' : 'not present')));
+      if (entry.reason) left.append(line('p', 'meta', 'Check failure: ' + entry.reason));
+      article.append(left);
+      box.append(article);
+    }
+  } catch {
+    count.textContent = 'Inventory unavailable';
+    message.hidden = false;
+    message.textContent = 'Local archive inventory could not be read. This is not proof that any archive is installed.';
+    box.replaceChildren();
+  }
+}
+refreshKiwixShelf();

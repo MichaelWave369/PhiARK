@@ -34,9 +34,13 @@ jobs:
         run: |
           npm run kiwix -- list
           npm run kiwix -- inventory
+      - name: R0.5 dry-run reader CLI contract
+        run: |
+          npm run reader -- help
+          npm run reader -- inventory
       - name: Local HTTP smoke test (no external connections)
         run: |
           node src/server.mjs > /tmp/phiark-server.log 2>&1 &
           pid=$!
           trap 'kill "$pid" 2>/dev/null || true' EXIT
-          node -e "const go=async()=>{for(let i=0;i<30;i++){try{const r=await fetch('http://127.0.0.1:3691/api/status');if(r.ok){const j=await r.json();if(j.documents!==2||j.networkRequired!==false)throw Error('unexpected status');const docs=await(await fetch('http://127.0.0.1:3691/api/search?q=verification')).json();if(!docs.length)throw Error('missing starter guide');console.log('Local HTTP PASS; seeded files:',j.documents);return}}catch(e){if(i===29)throw e;await new Promise(res=>setTimeout(res,200))}}};go().catch(e=>{console.error(e);process.exitCode=1})"
+          node -e "const go=async()=>{for(let i=0;i<30;i++){try{const r=await fetch('http://127.0.0.1:3691/api/status');if(r.ok){const j=await r.json();if(j.documents!==2||j.networkRequired!==false)throw Error('unexpected status');const docs=await(await fetch('http://127.0.0.1:3691/api/search?q=verification')).json();if(!docs.length)throw Error('missing starter guide');const kiwix=await(await fetch('http://127.0.0.1:3691/api/kiwix')).json();if(kiwix.rows.length!==6||kiwix.rows.some(x=>x.status!=='NOT_INSTALLED'))throw Error('incorrect real archive inventory');console.log('Local HTTP PASS; seeded files:',j.documents);return}}catch(e){if(i===29)throw e;await new Promise(res=>setTimeout(res,200))}}};go().catch(e=>{console.error(e);process.exitCode=1})"

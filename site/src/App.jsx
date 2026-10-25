@@ -234,7 +234,7 @@ export default function App() {
         <section className="hero">
           <div className="hero-glow" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orb-mark">Φ</div></div>
           <div className="hero-content">
-            <div className="hero-eyebrow"><span className="tiny-star">✦</span> AUTONOMOUS RESILIENCE & KNOWLEDGE <span className="hero-edition">R0.4 · VERIFIED ARCHIVES</span></div>
+            <div className="hero-eyebrow"><span className="tiny-star">✦</span> AUTONOMOUS RESILIENCE & KNOWLEDGE <span className="hero-edition">R0.5 · OFFLINE READER BRIDGE</span></div>
             <h1>Keep the knowledge.<br/><em>Keep the future.</em></h1>
             <p>When the signal disappears, understanding shouldn't. Explore an honest preview of PhiARK, a source-aware, local-first library for PhiOS.</p>
             <div className="hero-buttons">
@@ -308,6 +308,7 @@ export default function App() {
               </div>
               <a href={item.downloadUrl} target="_blank" rel="noopener noreferrer" aria-label={'View official Kiwix archive for ' + item.title}>OFFICIAL ZIM <ExternalLink size={15}/></a>
             </article>)}</div>
+            <div className="source-note"><ShieldCheck size={18}/><p><strong>R0.5 adds a guarded local Kiwix reader.</strong> Only the private PhiARK CLI can start an independently installed, SHA-256-checked executable against a verified archive, bound to 127.0.0.1. No browser on this public site can initiate that process or see its status.</p></div>
             <div className="source-note"><CircleAlert size={18}/><p>Downloading an archive from the publisher is an operator action, not a transfer into the public GitPage. Use <code>npm run kiwix -- inventory</code> on your PhiARK machine to see actual verified offline files.</p></div>
           </div>}
 

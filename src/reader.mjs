@@ -99,7 +99,7 @@ export async function runReader({
     child.once('exit', (code, signal) => {
       if (settled) return;
       settled = true; clear();
-      if (code === 0 || (stopping && signal === 'SIGTERM')) resolve({ status: 'STOPPED', exitCode: code, signal });
+      if (code === 0 || (stopping && ['SIGINT', 'SIGTERM'].includes(signal))) resolve({ status: 'STOPPED', exitCode: code, signal });
       else reject(new Error('kiwix-serve terminated unexpectedly: exit ' + code + ', signal ' + signal));
     });
   });

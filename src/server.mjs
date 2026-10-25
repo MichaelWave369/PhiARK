@@ -1,6 +1,8 @@
 import { createHash } from 'node:crypto';
 import { constants } from 'node:fs';
 import { createServer } from 'node:http';
+import { chmod } from 'node:fs/promises';
+import { selectLocalSocket } from './local_socket.mjs';
 import { lstat, open, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -130,8 +132,26 @@ const server = createServer(async (req, res) => {
     else res.destroy();
   }
 });
-server.listen(port, host, () => {
-  const address = server.address();
-  console.log('PhiARK R0.5 local knowledge vault: http://' + host + ':' + address.port);
-  if (process.env.PHIARK_ALLOW_LAN === '1') console.warn('WARNING: no authentication. Use only on trusted isolated networks.');
-});
+// Isolated PhiOS services may bind a filesystem socket without inheriting the
+// host network. This is NOT a browser bridge and confers no install/launch grant.
+const unixSocket = await selectLocalSocket(process.env, vaultRoot());
+if (unixSocket !== null) {
+  // Ensure socket creation is private from the first instant, before chmod.
+  process.umask(0o077);
+  server.listen(unixSocket, async () => {
+    try {
+      await chmod(unixSocket, 0o600);
+      console.log('PhiARK R0.6 private Unix socket: ' + unixSocket);
+    } catch (error) {
+      console.error('PhiARK socket permission setup failed:', error.message);
+      server.close();
+      process.exitCode = 1;
+    }
+  });
+} else {
+  server.listen(port, host, () => {
+    const address = server.address();
+    console.log('PhiARK R0.5 local knowledge vault: http://' + host + ':' + address.port);
+    if (process.env.PHIARK_ALLOW_LAN === '1') console.warn('WARNING: no authentication. Use only on trusted isolated networks.');
+  });
+}

@@ -81,3 +81,11 @@ npm run reader -- start chemistry --binary /absolute/path/kiwix-serve --binary-s
 The **local** browser at `http://127.0.0.1:3691/` reports actual hash-verified archive inventory at `/api/kiwix`; it has no remote launch/stop control. Once explicitly started, Kiwix's own browser viewer is reachable at `http://127.0.0.1:8181/` on the **same computer**. Third-party archive text is not certified for factual/medical safety or redistribution. See [R0.5 reader boundary](docs/KIWIX_READER_R05.md).
 
 The **GitHub Pages React showcase remains public-only**. It cannot access localhost on anyone's computer, detect a running reader, or open your private ZIM collection remotely.
+
+## R0.6 private Linux Unix-socket transport (PhiOS groundwork)
+
+An opt-in private Unix-domain socket can serve local PhiARK HTTP without a TCP listener.
+It requires a private vault root and explicit PHIARK_SOCKET_PATH, with no TCP/LAN
+options. This does **not** constitute PhiOS installation, grant or browser access.
+See [R0.6 transport boundary](docs/PHIOS_UNIX_SOCKET_R06.md) and
+[PhiOS issue #321](https://github.com/MichaelWave369/PhiOS/issues/321).

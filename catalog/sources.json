@@ -1,0 +1,60 @@
+{
+  "schema": "phiark-source-candidates-v1",
+  "notice": "Suggestions only. No documents are bundled or downloaded. Verify current licenses, source identity, and dates for each exact item before importing or redistributing.",
+  "candidates": [
+    {
+      "name": "Kiwix Library",
+      "homepage": "https://library.kiwix.org/",
+      "role": "Download ZIM archives for a separately installed Kiwix reader/server.",
+      "subjects": ["education", "science", "health"],
+      "integration": "external-offline-reader",
+      "license": "per-content-item; verify before redistribution",
+      "status": "candidate"
+    },
+    {
+      "name": "Kolibri",
+      "homepage": "https://learningequality.org/kolibri/",
+      "role": "Offline learning platform with exportable/importable channels.",
+      "subjects": ["education"],
+      "integration": "external-offline-service",
+      "license": "per-channel; verify before redistribution",
+      "status": "candidate"
+    },
+    {
+      "name": "OpenStax",
+      "homepage": "https://openstax.org/",
+      "role": "Downloadable openly licensed textbooks.",
+      "subjects": ["science", "engineering", "education"],
+      "integration": "manual-file-import",
+      "license": "verify license on each exact title and edition",
+      "status": "candidate"
+    },
+    {
+      "name": "IFRC First Aid Guidelines",
+      "homepage": "https://www.ifrc.org/",
+      "role": "Reference for current first-aid education and emergency response.",
+      "subjects": ["health", "survival"],
+      "integration": "manual-file-import",
+      "license": "verify terms of specific PDF and revisions",
+      "status": "candidate"
+    },
+    {
+      "name": "National Center for Home Food Preservation",
+      "homepage": "https://nchfp.uga.edu/",
+      "role": "Research-based food preservation recommendations.",
+      "subjects": ["food", "agriculture"],
+      "integration": "manual-file-import",
+      "license": "verify terms for selected material",
+      "status": "candidate"
+    },
+    {
+      "name": "Practical Action",
+      "homepage": "https://practicalaction.org/",
+      "role": "Technical briefs on water, sanitation, agriculture, and practical engineering.",
+      "subjects": ["water", "engineering", "agriculture"],
+      "integration": "manual-file-import",
+      "license": "verify terms for selected material",
+      "status": "candidate"
+    }
+  ]
+}

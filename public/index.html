@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>PhiARK | Knowledge Vault</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="brand"><span class="sigil">Φ</span><div><strong>PhiARK</strong><small>KNOWLEDGE VAULT</small></div></div>
+      <div class="sidebar-label">LIBRARY</div>
+      <nav aria-label="Categories" id="categories">
+        <button data-subject="all" class="active">All knowledge</button>
+        <button data-subject="survival">Survival</button>
+        <button data-subject="water">Water &amp; sanitation</button>
+        <button data-subject="food">Food preservation</button>
+        <button data-subject="health">Health</button>
+        <button data-subject="agriculture">Agriculture</button>
+        <button data-subject="engineering">Engineering</button>
+        <button data-subject="energy">Energy</button>
+        <button data-subject="communications">Communications</button>
+        <button data-subject="science">Science</button>
+        <button data-subject="education">Education</button>
+        <button data-subject="maps">Maps</button>
+        <button data-subject="other">Other</button>
+      </nav>
+      <div class="sidebar-foot">SOVEREIGN • COHERENT • LOCAL • FREE</div>
+    </aside>
+    <main>
+      <header><span class="eyebrow">PHIOS / OFFLINE LIBRARY</span><span class="chip" id="connection">CHECKING LOCAL SERVER</span></header>
+      <section class="hero">
+        <p class="eyebrow">Φ KNOWLEDGE VAULT / R0.1</p>
+        <h1>Human knowledge.<br><em>Kept within reach.</em></h1>
+        <p>Search the documents stored on this machine. No cloud AI, telemetry, login, or outside network is required.</p>
+        <div class="searchbox"><label for="search">SEARCH LOCAL KNOWLEDGE</label><input id="search" type="search" placeholder="Search titles, publishers, and plain-text documents…" autocomplete="off"></div>
+      </section>
+      <div class="metrics"><div><span>LOCAL DOCUMENTS</span><strong id="total">—</strong></div><div><span>SEARCH RESULTS</span><strong id="result-count">—</strong></div><div><span>LIBRARY STATE</span><strong id="library-state">Checking</strong></div></div>
+      <section aria-live="polite"><div class="section-head"><div><p class="eyebrow">LOCAL CATALOG</p><h2>Available documents</h2></div><span id="filter-label">All categories</span></div><p id="notice" class="notice">Connecting to the local vault…</p><div id="results" class="results"></div></section>
+      <footer>Every document is locally stored. Source, license, and review fields are disclosed, not assumed. Run <code>npm run vault -- verify</code> for an integrity check.</footer>
+    </main>
+  </div>
+</body>
+</html>

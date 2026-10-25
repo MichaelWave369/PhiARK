@@ -1,6 +1,6 @@
 /* Offline cache for FIRST-PARTY static PhiARK Pages assets only.
    This is NOT the private vault, a mirror of third-party sources, or PhiOS. */
-const CACHE = 'phiark-pages-v2';
+const CACHE = 'phiark-pages-v3';
 const SCOPE = self.registration.scope;
 const HOME = new URL('index.html', SCOPE).href;
 const ALLOWED = new URL(SCOPE);

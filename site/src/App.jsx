@@ -7,6 +7,7 @@ import {
   X, Zap, Sparkles, PackageCheck
 } from 'lucide-react';
 import sourceDirectory from '../../catalog/sources.json';
+import kiwixSelections from '../../catalog/kiwix-selected-r04.json';
 import essentialPack from '../../packs/essential-field-r01.json';
 import learningPack from '../../packs/learning-core-r01.json';
 import emergencyGuide from '../../starter-guides/EMERGENCY_INFORMATION_PLAN.md?raw';
@@ -201,10 +202,11 @@ export default function App() {
         <Label>WORKSPACE</Label>
         <button className={'nav-item ' + (view === 'library' ? 'selected' : '')} onClick={() => switchTo('library')}><BookOpen size={17}/> Library <ChevronRight size={15} className="nav-end" /></button>
         <button className={'nav-item ' + (view === 'packs' ? 'selected' : '')} onClick={() => switchTo('packs')}><PackageCheck size={17}/> Knowledge packs <ChevronRight size={15} className="nav-end" /></button>
+        <button className={'nav-item ' + (view === 'archives' ? 'selected' : '')} onClick={() => switchTo('archives')}><HardDrive size={17}/> Kiwix archives <ChevronRight size={15} className="nav-end" /></button>
         <button className={'nav-item ' + (view === 'sources' ? 'selected' : '')} onClick={() => switchTo('sources')}><Globe2 size={17}/> Source directory <ChevronRight size={15} className="nav-end" /></button>
         <button className={'nav-item ' + (view === 'readiness' ? 'selected' : '')} onClick={() => switchTo('readiness')}><ClipboardCheck size={17}/> Offline readiness <ChevronRight size={15} className="nav-end" /></button>
 
-        {view !== 'readiness' && view !== 'packs' && <>
+        {view !== 'readiness' && view !== 'packs' && view !== 'archives' && <>
           <div className="sidebar-divider" />
           <Label>TOPICS</Label>
           <div className="category-nav">{SUBJECTS.map((item) => {
@@ -232,7 +234,7 @@ export default function App() {
         <section className="hero">
           <div className="hero-glow" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orb-mark">Φ</div></div>
           <div className="hero-content">
-            <div className="hero-eyebrow"><span className="tiny-star">✦</span> AUTONOMOUS RESILIENCE & KNOWLEDGE <span className="hero-edition">R0.3 · KNOWLEDGE PACKS</span></div>
+            <div className="hero-eyebrow"><span className="tiny-star">✦</span> AUTONOMOUS RESILIENCE & KNOWLEDGE <span className="hero-edition">R0.4 · VERIFIED ARCHIVES</span></div>
             <h1>Keep the knowledge.<br/><em>Keep the future.</em></h1>
             <p>When the signal disappears, understanding shouldn't. Explore an honest preview of PhiARK, a source-aware, local-first library for PhiOS.</p>
             <div className="hero-buttons">
@@ -252,7 +254,7 @@ export default function App() {
 
         <section className="workspace" id="workspace">
           <div className="workspace-top">
-            <div><Label>YOUR KNOWLEDGE / IN REACH</Label><h2>{view === 'library' ? 'Explore the library' : view === 'sources' ? 'Source directory' : view === 'packs' ? 'Knowledge packs' : 'Offline readiness'}</h2><p className="section-copy">{view === 'library' ? 'These are real bundled reading files, plus any files you temporarily open here.' : view === 'sources' ? 'External candidates to research and license-check before downloading to your local vault.' : view === 'packs' ? 'Offline collection blueprints. Every slot starts unfilled in this public demo; actual installations are checked only by your private local PhiARK CLI.' : 'An operator checklist. Ticking a box is not proof that your hardware has passed a disconnected test.'}</p></div>
+            <div><Label>YOUR KNOWLEDGE / IN REACH</Label><h2>{view === 'library' ? 'Explore the library' : view === 'sources' ? 'Source directory' : view === 'packs' ? 'Knowledge packs' : view === 'archives' ? 'Kiwix archive selections' : 'Offline readiness'}</h2><p className="section-copy">{view === 'library' ? 'These are real bundled reading files, plus any files you temporarily open here.' : view === 'sources' ? 'External candidates to research and license-check before downloading to your local vault.' : view === 'packs' ? 'Offline collection blueprints. Every slot starts unfilled in this public demo; actual installations are checked only by your private local PhiARK CLI.' : view === 'archives' ? 'Exact official Kiwix editions, prepared for operator-approved checksum verification. The public site contains none of these archive files.' : 'An operator checklist. Ticking a box is not proof that your hardware has passed a disconnected test.'}</p></div>
             {view === 'library' && <button className="import-btn" onClick={() => fileInput.current?.click()}><FilePlus2 size={17}/> Preview a local file</button>}
           </div>
           <input ref={fileInput} type="file" multiple accept=".txt,.md,.pdf,.epub" className="hidden-input" onChange={(event) => { importFiles(event.target.files); event.target.value = ''; }} aria-label="Choose local documents to preview in this browser session" />
@@ -292,6 +294,21 @@ export default function App() {
               <div className="pack-footer"><CircleAlert size={16}/><span>This is a coverage plan, not an approved safety library. Bind and verify real documents on the local PhiARK machine using the R0.3 pack CLI.</span></div>
             </article>)}
             <div className="source-note"><CircleAlert size={18}/><p>R0.3 supports portable SHA-256 snapshots and restore to a new vault. It does not create a bootable USB, install Kiwix, or import Kolibri channels automatically.</p></div>
+          </div>}
+
+          {view === 'archives' && <div className="pack-list">
+            <div className="source-note"><CircleAlert size={18}/><p>These are <strong>six exact source candidates</strong>, not downloaded files. This public website cannot read PhiARK storage or know whether an archive is installed. Each archive must pass SHA-256 verification in the local PhiARK tool.</p></div>
+            <div className="source-list">{kiwixSelections.sources.map(item => <article key={item.id} className="source-card">
+              <span className="source-icon"><HardDrive size={21}/></span>
+              <div className="source-details">
+                <div className="source-title"><h3>{item.title}</h3><FileBadge warn>NOT INSTALLED HERE</FileBadge></div>
+                <p>{item.notes}</p>
+                <small>Exact edition: {item.filename} · About {item.approximateSize} · Rights not reviewed</small>
+                <div className="source-subjects"><span>{item.category}</span><span>Checksum available from publisher</span><span>No content safety certification</span></div>
+              </div>
+              <a href={item.downloadUrl} target="_blank" rel="noopener noreferrer" aria-label={'View official Kiwix archive for ' + item.title}>OFFICIAL ZIM <ExternalLink size={15}/></a>
+            </article>)}</div>
+            <div className="source-note"><CircleAlert size={18}/><p>Downloading an archive from the publisher is an operator action, not a transfer into the public GitPage. Use <code>npm run kiwix -- inventory</code> on your PhiARK machine to see actual verified offline files.</p></div>
           </div>}
 
           {view === 'sources' && <>

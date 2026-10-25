@@ -1,6 +1,7 @@
+import { createHash } from 'node:crypto';
+import { constants } from 'node:fs';
 import { createServer } from 'node:http';
-import { createReadStream } from 'node:fs';
-import { readFile, stat } from 'node:fs/promises';
+import { lstat, open, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDocumentId, objectPath, readCatalog, searchVault, vaultRoot } from './vault.mjs';
@@ -28,6 +29,39 @@ function respond(res, status, body, type = 'application/json; charset=utf-8', he
   res.writeHead(status, { ...common, 'Content-Type': type });
   res.end(head ? undefined : body);
 }
+// Check the object through the same descriptor that will serve it. A pathname
+// stat/size check alone permits same-length corruption and symlink substitution.
+async function openVerifiedDocument(filename, expectedSha256, expectedBytes) {
+  if (!Number.isSafeInteger(expectedBytes) || expectedBytes < 0 || expectedBytes > 512 * 1024 * 1024) {
+    throw new Error('invalid catalog byte count');
+  }
+  const before = await lstat(filename);
+  if (!before.isFile() || before.isSymbolicLink()) throw new Error('unsafe document path');
+  const file = await open(filename, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0));
+  try {
+    const info = await file.stat();
+    if (!info.isFile() || info.size !== expectedBytes || 
+        info.dev !== before.dev || info.ino !== before.ino) {
+      throw new Error('document size or identity mismatch');
+    }
+    const digest = createHash('sha256');
+    const block = Buffer.allocUnsafe(256 * 1024);
+    for (let position = 0; position < info.size;) {
+      const { bytesRead } = await file.read(
+        block, 0, Math.min(block.length, info.size - position), position
+      );
+      if (bytesRead === 0) throw new Error('document truncated during verification');
+      digest.update(block.subarray(0, bytesRead));
+      position += bytesRead;
+    }
+    if (digest.digest('hex') !== expectedSha256) throw new Error('document SHA-256 mismatch');
+    return file;
+  } catch (error) {
+    await file.close();
+    throw error;
+  }
+}
+
 const server = createServer(async (req, res) => {
   try {
     if (!['GET', 'HEAD'].includes(req.method)) return respond(res, 405, JSON.stringify({ error: 'read only' }));
@@ -65,16 +99,27 @@ const server = createServer(async (req, res) => {
       const entry = (await readCatalog()).find((x) => x.id === id);
       if (!entry) return respond(res, 404, '{"error":"not found"}', undefined, head);
       const filename = objectPath(vaultRoot(), id);
-      const info = await stat(filename);
-      if (!info.isFile() || info.size !== entry.bytes) return respond(res, 409, '{"error":"integrity check required"}', undefined, head);
+      let file;
+      try {
+        file = await openVerifiedDocument(filename, id, entry.bytes);
+      } catch {
+        // Do not disclose private filesystem paths, or return stale/modified bytes.
+        return respond(res, 409, '{"error":"integrity check required"}', undefined, head);
+      }
       const contentType = ['text/plain; charset=utf-8', 'application/pdf', 'application/epub+zip'].includes(entry.mime)
         ? entry.mime : 'application/octet-stream';
       const disposition = entry.extension === '.epub' ? 'attachment' : 'inline';
-      res.writeHead(200, { ...common, 'Content-Type': contentType, 'Content-Length': info.size,
-        'Content-Disposition': disposition + '; filename="' + entry.id + entry.extension + '"' });
-      if (head) return res.end();
-      const stream = createReadStream(filename);
+      if (head) {
+        await file.close();
+        res.writeHead(200, { ...common, 'Content-Type': contentType, 'Content-Length': entry.bytes,
+          'Content-Disposition': disposition + '; filename="' + entry.id + entry.extension + '"' });
+        return res.end();
+      }
+      const stream = file.createReadStream({ start: 0, autoClose: true });
       stream.on('error', () => res.destroy());
+      res.once('close', () => stream.destroy());
+      res.writeHead(200, { ...common, 'Content-Type': contentType, 'Content-Length': entry.bytes,
+        'Content-Disposition': disposition + '; filename="' + entry.id + entry.extension + '"' });
       stream.pipe(res);
       return;
     }

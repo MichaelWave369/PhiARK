@@ -1,0 +1,15 @@
+{
+  "schema": "phiark-pack-definition-v1",
+  "id": "learning-core-r01",
+  "title": "Offline Learning Core",
+  "edition": "2026-10",
+  "summary": "Foundational education collection; use Kolibri separately for rich courses.",
+  "slots": [
+    {"id":"math","title":"Arithmetic through algebra","subject":"education","priority":"essential","source":"OpenStax or licensed educational provider","safety":"general"},
+    {"id":"physics","title":"Introductory physics","subject":"science","priority":"important","source":"OpenStax physics titles","safety":"general"},
+    {"id":"biology","title":"Biology fundamentals","subject":"science","priority":"important","source":"OpenStax biology titles","safety":"general"},
+    {"id":"computing","title":"Computing and networking fundamentals","subject":"engineering","priority":"important","source":"open technical manuals","safety":"reference"},
+    {"id":"critical-thinking","title":"Research methods, evidence and media literacy","subject":"education","priority":"essential","source":"open educational text","safety":"general"}
+  ],
+  "note": "Curricular scope is advisory. This manifest neither downloads Kolibri content nor guarantees student completion."
+}

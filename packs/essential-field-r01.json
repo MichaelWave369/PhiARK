@@ -1,0 +1,21 @@
+{
+  "schema": "phiark-pack-definition-v1",
+  "id": "essential-field-r01",
+  "title": "Essential Field Knowledge",
+  "edition": "2026-10",
+  "summary": "Smallest useful offline readiness/learning collection. A planning manifest, not a preloaded emergency certification.",
+  "slots": [
+    {"id":"readiness-plan","title":"Household emergency and animal readiness","subject":"survival","priority":"essential","source":"PhiARK first-party starter guide","safety":"reference"},
+    {"id":"evidence-check","title":"How to verify a practical guide","subject":"education","priority":"essential","source":"PhiARK first-party starter guide","safety":"general"},
+    {"id":"safe-water","title":"Potable water and sanitation procedures","subject":"water","priority":"essential","source":"Practical Action / validated current public-health reference","safety":"safety-critical"},
+    {"id":"first-aid","title":"First aid and emergency medical recognition","subject":"health","priority":"essential","source":"IFRC first-aid guidance, exact current edition","safety":"safety-critical"},
+    {"id":"food-storage","title":"Safe food storage and preservation","subject":"food","priority":"essential","source":"National Center for Home Food Preservation","safety":"safety-critical"},
+    {"id":"grow-food","title":"Food production, soil, seeds and irrigation","subject":"agriculture","priority":"important","source":"Practical Action / licensed agriculture reference","safety":"reference"},
+    {"id":"power","title":"Electrical safety, solar and battery fundamentals","subject":"energy","priority":"important","source":"current equipment-specific manuals / open educational texts","safety":"safety-critical"},
+    {"id":"radio","title":"Offline radio and emergency communications","subject":"communications","priority":"important","source":"licensed technical or amateur-radio manual","safety":"reference"},
+    {"id":"repair","title":"Tools, mechanics and repair principles","subject":"engineering","priority":"important","source":"open technical learning material","safety":"reference"},
+    {"id":"learning","title":"Math and science fundamentals","subject":"science","priority":"important","source":"OpenStax / authorized textbook","safety":"general"},
+    {"id":"maps","title":"Offline geographic maps and navigation","subject":"maps","priority":"important","source":"OpenStreetMap-compatible offline data and reader","safety":"reference"}
+  ],
+  "note": "Manual binding is not approval. Verify edition, author, legal redistribution and safety before real-world reliance."
+}

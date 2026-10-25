@@ -1,6 +1,6 @@
 /* Offline cache for FIRST-PARTY static PhiARK Pages assets only.
    This is NOT the private vault, a mirror of third-party sources, or PhiOS. */
-const CACHE = 'phiark-pages-v1';
+const CACHE = 'phiark-pages-v2';
 const SCOPE = self.registration.scope;
 const HOME = new URL('index.html', SCOPE).href;
 const ALLOWED = new URL(SCOPE);
@@ -37,18 +37,24 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET' || url.origin !== ALLOWED.origin || !url.pathname.startsWith(ALLOWED.pathname)) return;
   event.respondWith((async () => {
     const cache = await caches.open(CACHE);
+    if (request.mode === 'navigate') {
+      try {
+        const response = await fetch(request);
+        if (response.ok && response.type === 'basic') await cache.put(request, response.clone());
+        return response;
+      } catch {
+        return (await cache.match(request)) || (await cache.match(HOME)) ||
+          Response.error();
+      }
+    }
     const cached = await cache.match(request);
     if (cached) return cached;
     try {
       const response = await fetch(request);
       if (response.ok && response.type === 'basic') await cache.put(request, response.clone());
       return response;
-    } catch (error) {
-      if (request.mode === 'navigate') {
-        const shell = await cache.match(HOME);
-        if (shell) return shell;
-      }
-      throw error;
+    } catch {
+      return Response.error();
     }
   })());
 });

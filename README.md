@@ -59,3 +59,22 @@ See [implementation contract](docs/ARCHITECTURE.md), [source and safety policy](
 **Design alignment:** PhiOS's capability-is-not-authority rule remains intact. Nothing in this repository grants itself installation, network, or execution permissions in PhiOS.
 
 This repository's original software and first-party starter guides are MIT-licensed. Third-party documents imported into a personal vault retain their original rights and are not automatically part of the MIT grant.
+
+## Public React showcase (GitHub Pages)
+
+The React-based public **PhiARK Knowledge Vault Showcase** lives in `site/` and is built by `.github/workflows/pages.yml`. Once GitHub Pages is configured for **GitHub Actions** and the deployment succeeds, its public URL is:
+
+**https://michaelwave369.github.io/PhiARK/**
+
+The page bundles two first-party educational guides and links to external resource candidates. Optional document previews run **only in the visitor's browser session**. It never connects to or exposes the real PhiARK local server, never uploads selected files, and stores nothing in a cloud account. Static assets are bundled into the build; a service worker caches them for subsequent offline visits after a successful first load.
+
+```bash
+cd site
+npm install
+npm test
+npm run build
+npm run check:build
+npm run dev
+```
+
+See [GitHub Pages deployment and scope](site/PAGES.md). GitHub Pages is **not** a private document host or the PhiOS local backend.

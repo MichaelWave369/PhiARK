@@ -1,0 +1,13 @@
+{
+  "name": "PhiARK Knowledge Vault",
+  "short_name": "PhiARK",
+  "description": "Public knowledge vault showcase for PhiOS. Personal files stay in your browser session.",
+  "start_url": "/PhiARK/",
+  "scope": "/PhiARK/",
+  "display": "standalone",
+  "background_color": "#0b1312",
+  "theme_color": "#0b1312",
+  "icons": [
+    { "src": "/PhiARK/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

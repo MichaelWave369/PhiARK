@@ -14,7 +14,8 @@
     "packs": "node src/packs-cli.mjs",
     "kiwix": "node src/kiwix-cli.mjs",
     "reader": "node src/reader-cli.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "intel": "node src/intelligence-cli.mjs"
   },
   "license": "MIT"
 }

@@ -147,6 +147,12 @@ export function verifyIntelligenceBytes(packRaw, manifestRaw, trustRaw, now = Da
 
 async function snapshot(path, limit) {
   const name = resolve(path);
+  // Explicit lstat is useful on Windows where O_NOFOLLOW may be unavailable.
+  // O_NOFOLLOW adds race-resistant protection on platforms that support it.
+  const initial = await lstat(name);
+  if (initial.isSymbolicLink() || !initial.isFile()) {
+    throw new Error('Refusing symbolic link or non-regular file input');
+  }
   const flag = constants.O_RDONLY | (constants.O_NOFOLLOW || 0);
   const fd = await open(name, flag);
   try {

@@ -54,7 +54,7 @@ function strictManifest(raw) {
   if (!exactKeys(manifest, MANIFEST_KEYS)) throw new Error('Unsupported signed manifest fields');
   // Manifest contains only flat string fields: counting key labels also
   // rejects ambiguous duplicate JSON properties accepted by JSON.parse.
-  const matches = [...text.matchAll(/"([a-z_]+)"\s*:/g)];
+  const matches = [...text.matchAll(/"([a-z0-9_]+)"\s*:/g)];
   if (matches.length !== MANIFEST_KEYS.length ||
       MANIFEST_KEYS.some(k => matches.filter(m => m[1] === k).length !== 1)) {
     throw new Error('Ambiguous or duplicate signed manifest properties');

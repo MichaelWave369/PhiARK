@@ -63,9 +63,10 @@ function strictManifest(raw) {
 }
 function headerMessage(manifest) {
   const header = Object.fromEntries(HEADER_KEYS.map(k => [k, manifest[k]]));
-  return Buffer.concat([DOMAIN, Buffer.from(JSON.stringify(
-    Object.fromEntries(Object.entries(header).sort(([a],[b]) => a.localeCompare(b, 'en-US'))
-  ), 'utf8')]);
+  const sorted = Object.fromEntries(
+    Object.entries(header).sort(([a], [b]) => a.localeCompare(b, 'en-US'))
+  );
+  return Buffer.concat([DOMAIN, Buffer.from(JSON.stringify(sorted), 'utf8')]);
 }
 function validatePolicy(policy, publisher, keyId, digest, issued) {
   if (!exactKeys(policy, ['schema','publishers']) ||

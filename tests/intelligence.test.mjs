@@ -12,8 +12,10 @@ import {
 const sha=data=>createHash('sha256').update(data).digest('hex');
 const DOMAIN=Buffer.from('FieldShield Sentinel Signed IOC v1\0');
 const fmt=obj=>Buffer.from(JSON.stringify(obj,null,2)+'\n');
-const headerMessage=header=>Buffer.concat([DOMAIN,Buffer.from(JSON.stringify(
-  Object.fromEntries(Object.entries(header).sort(([a],[b])=>a.localeCompare(b,'en-US'))))]);
+const headerMessage=header=>{
+  const sorted=Object.fromEntries(Object.entries(header).sort(([a],[b])=>a.localeCompare(b,'en-US')));
+  return Buffer.concat([DOMAIN,Buffer.from(JSON.stringify(sorted))]);
+};
 const fresh=async t=>{
   const home=await mkdtemp(join(tmpdir(),'phiark-intel-'));
   t.after(()=>rm(home,{recursive:true,force:true}));

@@ -89,3 +89,26 @@ It requires a private vault root and explicit PHIARK_SOCKET_PATH, with no TCP/LA
 options. This does **not** constitute PhiOS installation, grant or browser access.
 See [R0.6 transport boundary](docs/PHIOS_UNIX_SOCKET_R06.md) and
 [PhiOS issue #321](https://github.com/MichaelWave369/PhiOS/issues/321).
+
+
+## R0.7: FieldShield Sentinel Offline Intelligence Vault (optional CLI)
+
+PhiARK can now act as a **local, portable storage layer** for FieldShield
+Sentinel v0.3 **Ed25519-signed** IOC packs. It uses Node.js built-in crypto
+and requires an **independently provided, locally pinned trust store** every
+time the operator imports, re-verifies, or exports a signed pack.
+
+    npm run intel -- import ./pack.json ./pack.sig.json ./trusted.json --i-approve-import
+    npm run intel -- list
+    npm run intel -- verify ./trusted.json
+    npm run intel -- export <pack-sha256> ./NEW-export ./trusted.json --i-approve-export
+
+Copies are stored in `PHIARK_DATA_DIR/intelligence`, separate from the
+document knowledge vault. Portable exports never include trust-store keys.
+No automatic network access, uploads, public GitPage routes, device forensics
+or installer privileges are introduced.
+
+**Only publisher-key authenticity is checked, not IOC factual accuracy, detection
+coverage, licensing, or user-device health.** There are no pre-trusted
+publishers or bundled live spyware signatures. Read
+[the R0.7 integration and trust guide](docs/SENTINEL_INTELLIGENCE_R07.md).

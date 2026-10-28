@@ -167,3 +167,32 @@ test('refuses changing publisher ID or signature metadata',async t=>{
   changed.expires_at='2036-01-01T00:00:00Z';
   assert.throws(()=>verifyIntelligenceBytes(v.pack,fmt(changed),fmt(v.policy)),/signature invalid/);
 });
+
+
+test('accepts a real Python FieldShield Ed25519 signed fixture',()=>{
+  // Generated with Python cryptography + FieldShield v0.3 canonical signing.
+  // Only synthetic pack, public key and signature appear here. No private key.
+  const pack=fmt({
+    schema:'fieldshield.ioc-pack.v1',source:'SYNTHETIC-CROSS-RUNTIME-ONLY',
+    issued_at:'2026-01-01T00:00:00Z',
+    indicators:[{id:'cross-runtime-demo',kind:'domain',
+      value:'interop.example.invalid',confidence:'low',
+      reference:'https://www.rfc-editor.org/rfc/rfc2606'}]
+  });
+  const digest='1dd0ee1c9a1a6df2f594a0115878ce46ea62910f0b53ae62ec3b56f7f8f57bcb';
+  assert.equal(sha(pack),digest);
+  const manifest=fmt({
+    schema:'fieldshield.signed-ioc.v1',publisher:'interop-test',key_id:'python-fixture',
+    pack_sha256:digest,issued_at:'2026-02-01T00:00:00Z',
+    expires_at:'2035-01-01T00:00:00Z',
+    signature_b64:'AyH4t218nnS9Mk7NuRyIo2zlteX73ZTZvZShEyR7NE8AFDEcqYeWSpcvY2WLWoDlJ2oP2wmqx9/NYSsEMm4OAw=='
+  });
+  const trust=fmt({schema:'fieldshield.trust-store.v1',publishers:[{
+    id:'interop-test',keys:[{id:'python-fixture',algorithm:'ed25519',
+      state:'trusted',public_key_b64:'ebVWLo/mVPlAeLES6KmLp5AfhTrmlb7X4OORC60ElmQ='}],
+    blocked_pack_sha256:[],minimum_issued_at:'2026-01-01T00:00:00Z'
+  }]});
+  const receipt=verifyIntelligenceBytes(pack,manifest,trust,Date.parse('2026-10-28T16:00:00Z'));
+  assert.equal(receipt.id,digest);
+  assert.equal(receipt.publisher,'interop-test');
+});

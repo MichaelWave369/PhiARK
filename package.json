@@ -15,7 +15,8 @@
     "kiwix": "node src/kiwix-cli.mjs",
     "reader": "node src/reader-cli.mjs",
     "test": "node --test",
-    "intel": "node src/intelligence-cli.mjs"
+    "intel": "node src/intelligence-cli.mjs",
+    "field": "node src/field-sources-cli.mjs"
   },
   "license": "MIT"
 }

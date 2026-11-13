@@ -45,6 +45,9 @@ jobs:
           npm run field -- detail kit-b-survival-defense
           npm run field -- plan
           npm run packs -- plan field-skills-r01
+      - name: R0.9 CodeBound offline bridge CLI contract
+        run: |
+          npm run field -- help
       - name: Local HTTP smoke test (no external connections)
         run: |
           node src/server.mjs > /tmp/phiark-server.log 2>&1 &

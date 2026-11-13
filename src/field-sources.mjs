@@ -26,13 +26,13 @@ export async function readFieldSourceCatalog() {
     if (item.archiveItemUrl !== 'https://archive.org/details/' + item.id ||
         item.archiveMetadataUrl !== 'https://archive.org/metadata/' + item.id ||
         !item.title || typeof item.title !== 'string' ||
-        !/\.zip$/i.test(item.originalArchiveFilename) ||
+        !/^[A-Za-z0-9][A-Za-z0-9._-]*\.zip$/i.test(item.originalArchiveFilename) ||
         !Number.isSafeInteger(item.reportedArchiveBytes) || item.reportedArchiveBytes <= 0 ||
         item.rightsStatus !== VALID_RIGHTS || item.contentReview !== VALID_REVIEW ||
         item.acquisitionStatus !== VALID_ACQUISITION ||
         !Array.isArray(item.fieldSlots) || new Set(item.fieldSlots).size !== item.fieldSlots.length ||
         item.fieldSlots.some(s => !knownSlots.has(s)) ||
-        !Array.isArray(item.discoveryTopics) || !Array.isArray(item.caution ? [item.caution] : null)) {
+        !Array.isArray(item.discoveryTopics) || typeof item.caution !== 'string' || item.caution.trim().length < 10) {
       throw new Error('Invalid source discovery record: ' + item.id);
     }
   }

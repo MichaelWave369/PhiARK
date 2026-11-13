@@ -2,6 +2,7 @@
 import { describeFieldSource, fieldCoverage, listFieldSourceLeads } from './field-sources.mjs';
 import { planPack } from './packs.mjs';
 import { previewCodeBoundFieldbook, importCodeBoundSkill } from './codebound-bridge.mjs';
+import { exportCodeBoundUsbKit, verifyCodeBoundUsbKit } from './codebound-usb-kit.mjs';
 
 const [command = 'help', argument, slot, approval] = process.argv.slice(2);
 async function main() {
@@ -20,6 +21,15 @@ async function main() {
       throw new Error('Usage: npm run field -- codebound-import ./fieldbook.json <slot> --i-approve-import');
     }
     result = await importCodeBoundSkill({filename:argument,slot,approved:true});
+  } else if (command === 'codebound-usb-export') {
+    if (!argument || !slot || approval !== '--i-approve-export') {
+      throw new Error('Usage: npm run field -- codebound-usb-export ./fieldbook.json /path/to/NEW-USB-KIT --i-approve-export');
+    }
+    result = await exportCodeBoundUsbKit({filename:argument,target:slot,approved:true});
+  } else if (command === 'codebound-usb-verify') {
+    if (!argument || slot) throw new Error('Usage: npm run field -- codebound-usb-verify /path/to/USB-KIT');
+    result = await verifyCodeBoundUsbKit(argument);
+    if (!result.ok) process.exitCode = 1;
   }
   else if (command === 'help') {
     console.log(`PhiARK eight-field-skills offline source registry
@@ -31,6 +41,10 @@ async function main() {
                                      Preview the eight CodeBound guides with no writes
   npm run field -- codebound-import ./fieldbook.json water --i-approve-import
                                      Import ONE first-party guide as Markdown into the private vault
+  npm run field -- codebound-usb-export ./fieldbook.json /path/to/NEW-KIT --i-approve-export
+                                     Create 8 standalone HTML/Markdown guides and checksums
+  npm run field -- codebound-usb-verify /path/to/NEW-KIT
+                                     Verify offline file integrity, names and structure
 
 To preserve a reviewed, legally acquired individual guide:
   npm run vault -- add /path/to/guide.pdf --title "Exact title" --subject water --author "Author" --source "https://source.example/item" --license "terms to verify" --safety safety-critical

@@ -18,7 +18,8 @@ async function sandbox(t) {
 test('pack definitions are real plans, not falsely counted downloads', async t => {
   const { data } = await sandbox(t);
   const list = await listPacks();
-  assert.equal(list.length, 2);
+  assert.equal(list.length, 3);
+  assert.ok(list.some(pack => pack.id === 'field-skills-r01'));
   const plan = await planPack('essential-field-r01', data);
   assert.equal(plan.total, 11);
   assert.equal(plan.hashVerified, 0);

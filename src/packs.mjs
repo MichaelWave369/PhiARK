@@ -7,7 +7,7 @@ import { digestFile, isDocumentId, objectPath, readCatalog, vaultRoot } from './
 const defsRoot = join(dirname(fileURLToPath(import.meta.url)), '..', 'packs');
 const IDS = /^[a-z][a-z0-9-]{1,60}$/;
 const SNAP_SCHEMA = 'phiark-portable-pack-v1';
-const packIds = ['essential-field-r01', 'learning-core-r01'];
+const packIds = ['essential-field-r01', 'learning-core-r01', 'field-skills-r01'];
 
 function assertId(id) {
   if (!IDS.test(id) || !packIds.includes(id)) throw new Error('Unknown pack ID');

@@ -38,6 +38,13 @@ jobs:
         run: |
           npm run reader -- help
           npm run reader -- inventory
+      - name: R0.8 offline field skill source registry and pack plan
+        run: |
+          npm run field -- sources
+          npm run field -- coverage
+          npm run field -- detail kit-b-survival-defense
+          npm run field -- plan
+          npm run packs -- plan field-skills-r01
       - name: Local HTTP smoke test (no external connections)
         run: |
           node src/server.mjs > /tmp/phiark-server.log 2>&1 &

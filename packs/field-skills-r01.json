@@ -1,0 +1,74 @@
+{
+  "schema": "phiark-pack-definition-v1",
+  "id": "field-skills-r01",
+  "title": "Eight Essential Field Skills (Offline)",
+  "edition": "2026-11",
+  "summary": "Eight independently selectable, human-reviewed field-skill source slots. First-party CodeBound guide cards are available separately; this pack contains no third-party files until explicitly imported and bound.",
+  "slots": [
+    {
+      "id": "harvest",
+      "title": "Responsible hunting, fishing and wild-food safety",
+      "subject": "food",
+      "priority": "important",
+      "source": "CodeBound field-hunt-fish-harvest; EPA fish advisories; current local fish-and-game regulations; licensed and reviewed field manuals",
+      "safety": "safety-critical"
+    },
+    {
+      "id": "water",
+      "title": "Emergency water sourcing and microbial treatment",
+      "subject": "water",
+      "priority": "essential",
+      "source": "CodeBound field-purify-water; current CDC water emergency guidance",
+      "safety": "safety-critical"
+    },
+    {
+      "id": "natural-medicine",
+      "title": "Evidence-first first aid and plant-remedy safety",
+      "subject": "health",
+      "priority": "essential",
+      "source": "CodeBound field-natural-medicine-literacy; IFRC first aid and NIH NCCIH safety resources; professionally reviewed only",
+      "safety": "safety-critical"
+    },
+    {
+      "id": "shelter",
+      "title": "Safe temporary shelter and exposure protection",
+      "subject": "survival",
+      "priority": "essential",
+      "source": "CodeBound field-build-shelter; NPS Ten Essentials and current local hazards",
+      "safety": "safety-critical"
+    },
+    {
+      "id": "garden",
+      "title": "Seasonal gardening, seed saving and soil health",
+      "subject": "agriculture",
+      "priority": "important",
+      "source": "CodeBound field-grow-garden; local cooperative extension service",
+      "safety": "reference"
+    },
+    {
+      "id": "power",
+      "title": "Safe portable power, loads, batteries and solar",
+      "subject": "energy",
+      "priority": "important",
+      "source": "CodeBound field-create-power; FEMA and manufacturer-approved electrical safety guidance",
+      "safety": "safety-critical"
+    },
+    {
+      "id": "self-defense",
+      "title": "Nonviolent self-protection, avoidance and safe escape",
+      "subject": "survival",
+      "priority": "important",
+      "source": "CodeBound field-personal-safety; de-escalation and household safety training; exclude weapons instructions",
+      "safety": "reference"
+    },
+    {
+      "id": "navigation",
+      "title": "Map and compass navigation with offline route planning",
+      "subject": "maps",
+      "priority": "important",
+      "source": "CodeBound field-navigate; NPS / USGS map-and-compass references",
+      "safety": "reference"
+    }
+  ],
+  "note": "Never interpret missing slots as ready; source list is a discovery queue, not downloaded data or advice approval. A source's license, edition and safety must be reviewed separately before real-world use or redistribution."
+}

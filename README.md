@@ -128,3 +128,7 @@ npm run packs -- plan field-skills-r01
 The [Awakening Project Archive.org creator search](https://archive.org/search?query=creator%3A%22Awakening+Project%22) was inspected as a discovery lead: its six item ZIPs are **not downloaded, licensed for redistribution, or approved as safe/accurate reference material**. The uploader describes them as primarily Portuguese. Source metadata remains separate from the private file vault. Use explicit `npm run vault -- add` and `npm run packs -- bind field-skills-r01 <slot> <actual-digest>` only after reviewing individual original documents, rights and high-stakes claims.
 
 For commands, supported safety boundaries and offline test instructions, see [R0.8 field skills guide](docs/FIELD_SKILLS_R08.md). No unknown ZIP extraction, external downloads, cloud calls or new runtime dependencies are introduced.
+
+## R0.9: Local CodeBound fieldbook-to-PhiARK bridge
+
+Use `npm run field -- codebound-preview /path/to/fieldbook.json` to inspect eight known CodeBound skills with no writes. Then run `npm run field -- codebound-import /path/to/fieldbook.json water --i-approve-import` to import **one** first-party guide into the private vault as searchable Markdown. Review the result, then separately bind its real SHA-256 digest with `npm run packs -- bind field-skills-r01 water <digest>`. No downloads, unknown ZIP extraction, automatic binding, source authentication, or technical/medical certification occur. See [R0.9 workflow and safety limits](docs/CODEBOUND_BRIDGE_R09.md).

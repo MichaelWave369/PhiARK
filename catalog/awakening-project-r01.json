@@ -1,0 +1,150 @@
+{
+  "schema": "phiark-archive-discovery-v1",
+  "snapshotDate": "2026-11-13",
+  "searchUrl": "https://archive.org/search?query=creator%3A%22Awakening+Project%22",
+  "searchApi": "https://archive.org/advancedsearch.php?q=creator%3A%22Awakening%20Project%22&rows=30&output=json",
+  "publisherClaim": "Awakening Project (Internet Archive creator metadata; not independently authenticated)",
+  "status": "EXTERNAL_CANDIDATES_ONLY_NO_LOCAL_BYTES",
+  "notice": "Exactly six Internet Archive item records inspected on 2026-11-13. Metadata and ZIP filenames/byte counts are from archive.org/metadata/{id}; subject suggestions rely on uploader descriptions. No nested documents were examined, verified, licensed or reviewed for safety. No automatic downloads, decompression or execution.",
+  "items": [
+    {
+      "id": "kit-a-self-sufficiency",
+      "title": "Awakening Project — Kit A (Self-Sufficiency)",
+      "archiveItemUrl": "https://archive.org/details/kit-a-self-sufficiency",
+      "archiveMetadataUrl": "https://archive.org/metadata/kit-a-self-sufficiency",
+      "originalArchiveFilename": "Kit_A_Self-Sufficiency.zip",
+      "reportedArchiveBytes": 128226938,
+      "descriptionLanguageClaim": "Portuguese",
+      "discoveryTopics": [
+        "food production",
+        "water production",
+        "carpentry",
+        "sustainability",
+        "3D printing"
+      ],
+      "fieldSlots": [
+        "water",
+        "garden",
+        "power"
+      ],
+      "contentReview": "NOT_REVIEWED",
+      "rightsStatus": "UNKNOWN",
+      "acquisitionStatus": "NOT_DOWNLOADED",
+      "caution": "Potentially useful leads only; no underlying documents verified."
+    },
+    {
+      "id": "kit-b-survival-defense",
+      "title": "Awakening Project — Kit B (Survival & Defense)",
+      "archiveItemUrl": "https://archive.org/details/kit-b-survival-defense",
+      "archiveMetadataUrl": "https://archive.org/metadata/kit-b-survival-defense",
+      "originalArchiveFilename": "Kit_B_Survival-Defense.zip",
+      "reportedArchiveBytes": 79981632,
+      "descriptionLanguageClaim": "Portuguese",
+      "discoveryTopics": [
+        "shelters",
+        "hunting",
+        "fishing",
+        "forest medicine",
+        "hygiene",
+        "emergency aid",
+        "firearms"
+      ],
+      "fieldSlots": [
+        "harvest",
+        "shelter",
+        "natural-medicine",
+        "self-defense"
+      ],
+      "contentReview": "NOT_REVIEWED",
+      "rightsStatus": "UNKNOWN",
+      "acquisitionStatus": "NOT_DOWNLOADED",
+      "caution": "Uploader description includes firearms/shooting material. No weapon or unsafe medical content is approved or imported into curated instruction."
+    },
+    {
+      "id": "kit-c-preparedness",
+      "title": "Awakening Project — Kit C (Preparedness & Resilience)",
+      "archiveItemUrl": "https://archive.org/details/kit-c-preparedness",
+      "archiveMetadataUrl": "https://archive.org/metadata/kit-c-preparedness",
+      "originalArchiveFilename": "Kit_C_Preparedness.zip",
+      "reportedArchiveBytes": 57528941,
+      "descriptionLanguageClaim": "Portuguese",
+      "discoveryTopics": [
+        "resilience",
+        "exercise",
+        "mental wellbeing",
+        "meditation"
+      ],
+      "fieldSlots": [],
+      "contentReview": "NOT_REVIEWED",
+      "rightsStatus": "UNKNOWN",
+      "acquisitionStatus": "NOT_DOWNLOADED",
+      "caution": "General resilience background, not clinical treatment."
+    },
+    {
+      "id": "kit-d-tech-privacy",
+      "title": "Awakening Project — Kit D (Tech & Privacy)",
+      "archiveItemUrl": "https://archive.org/details/kit-d-tech-privacy",
+      "archiveMetadataUrl": "https://archive.org/metadata/kit-d-tech-privacy",
+      "originalArchiveFilename": "Kit_D_Tech-Privacy.zip",
+      "reportedArchiveBytes": 73400063,
+      "descriptionLanguageClaim": "Portuguese",
+      "discoveryTopics": [
+        "programming",
+        "home networks",
+        "emergency communications",
+        "privacy",
+        "AI"
+      ],
+      "fieldSlots": [],
+      "contentReview": "NOT_REVIEWED",
+      "rightsStatus": "UNKNOWN",
+      "acquisitionStatus": "NOT_DOWNLOADED",
+      "caution": "Possible future PhiOS offline communications cross-reference; no code/scripts are trusted."
+    },
+    {
+      "id": "kit-e-strategy-society",
+      "title": "Awakening Project — Kit E (Strategy & Society)",
+      "archiveItemUrl": "https://archive.org/details/kit-e-strategy-society",
+      "archiveMetadataUrl": "https://archive.org/metadata/kit-e-strategy-society",
+      "originalArchiveFilename": "Kit_E_Strategy-Society.zip",
+      "reportedArchiveBytes": 71380888,
+      "descriptionLanguageClaim": "Portuguese",
+      "discoveryTopics": [
+        "society",
+        "social psychology",
+        "geopolitics",
+        "crises"
+      ],
+      "fieldSlots": [],
+      "contentReview": "NOT_REVIEWED",
+      "rightsStatus": "UNKNOWN",
+      "acquisitionStatus": "NOT_DOWNLOADED",
+      "caution": "Political, historical and interpretive claims require separate provenance checking."
+    },
+    {
+      "id": "kit-f-general-tools",
+      "title": "Awakening Project — Kit F (General Tools)",
+      "archiveItemUrl": "https://archive.org/details/kit-f-general-tools",
+      "archiveMetadataUrl": "https://archive.org/metadata/kit-f-general-tools",
+      "originalArchiveFilename": "Kit_F_General-Tools.zip",
+      "reportedArchiveBytes": 90704649,
+      "descriptionLanguageClaim": "Portuguese",
+      "discoveryTopics": [
+        "celestial navigation",
+        "mechanics",
+        "electricity",
+        "electronics",
+        "calculations",
+        "vehicles"
+      ],
+      "fieldSlots": [
+        "navigation",
+        "power"
+      ],
+      "contentReview": "NOT_REVIEWED",
+      "rightsStatus": "UNKNOWN",
+      "acquisitionStatus": "NOT_DOWNLOADED",
+      "caution": "Specialized electrical/mechanical/vehicle guidance is not verified for safe practice."
+    }
+  ]
+}

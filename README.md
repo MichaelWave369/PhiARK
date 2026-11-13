@@ -112,3 +112,19 @@ or installer privileges are introduced.
 coverage, licensing, or user-device health.** There are no pre-trusted
 publishers or bundled live spyware signatures. Read
 [the R0.7 integration and trust guide](docs/SENTINEL_INTELLIGENCE_R07.md).
+
+## R0.8: Eight practical offline field skills (candidate source library)
+
+The new `field-skills-r01` portable knowledge pack has eight independently bindable source slots: responsible food harvest, drinking water, natural-medicine literacy/first aid, shelter, gardening, backup power, nonviolent self-defense, and navigation. It complements the original printable [CodeBound field cards](https://github.com/MichaelWave369/CodeBound) and the private household tools in [PhiSafe](https://github.com/MichaelWave369/PhiSafe).
+
+```bash
+npm run field -- sources                   # 6 external Archive.org candidate items; no downloads
+npm run field -- detail kit-a-self-sufficiency
+npm run field -- coverage                  # 8 skills, source leads vs actual local bytes
+npm run field -- plan                      # actual hash-verified locally bound files
+npm run packs -- plan field-skills-r01
+```
+
+The [Awakening Project Archive.org creator search](https://archive.org/search?query=creator%3A%22Awakening+Project%22) was inspected as a discovery lead: its six item ZIPs are **not downloaded, licensed for redistribution, or approved as safe/accurate reference material**. The uploader describes them as primarily Portuguese. Source metadata remains separate from the private file vault. Use explicit `npm run vault -- add` and `npm run packs -- bind field-skills-r01 <slot> <actual-digest>` only after reviewing individual original documents, rights and high-stakes claims.
+
+For commands, supported safety boundaries and offline test instructions, see [R0.8 field skills guide](docs/FIELD_SKILLS_R08.md). No unknown ZIP extraction, external downloads, cloud calls or new runtime dependencies are introduced.
